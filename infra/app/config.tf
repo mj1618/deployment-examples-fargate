@@ -14,4 +14,5 @@ locals {
     dev = "development"
     prod = "production"
   }[terraform.workspace]
+  app_port = 8080
 }

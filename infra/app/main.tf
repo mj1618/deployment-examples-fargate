@@ -56,7 +56,7 @@ module app_fargate {
   environment = terraform.workspace
   app_name = local.app_name
   domain_name = local.domain_name
-  fargate_app_port = 8080
+  fargate_app_port = local.app_port
   dx_root_domain = var.dx_root_domain
   environment_variables = [
     { 
