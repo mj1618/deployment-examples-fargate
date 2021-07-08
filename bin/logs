@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [ "dev" != "$1" ] && [ "prod" != "$1" ]; then 
+  echo "Please specify dev or prod as first argument"
+  exit 1
+fi
+export TF_WORKSPACE=$1
+
+AWS_PROFILE=deploymentuser aws logs tail "/ecs/service/dxgpu-app-$1" --region eu-west-1 --follow

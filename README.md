@@ -1,4 +1,20 @@
-# Deployment Example (dx) Pipeline
+# Deployment Examples Fargate (dxfar) Pipeline
+
+All deployment-examples are from a blank AWS and Terraform account as no assumptions are made about pre-existing knowledge or infrastructure.
+
+In this example we create a Fargate cluster, an Aurora Postgres database and launch a node server into the cluster.
+
+The basic sequence of steps is as follows:
+- Create an AWS and Terraform account and save credentials
+- Create the `deploymentuser` in AWS so we are not using root credentials
+- Create the VPC
+- Create the database
+- Create an ECR repo to push images to
+- Create the reusable ECS infrastrcture like security groups, roles, the cluster itself etc.
+- Build the image and push to the repo
+- Deploy an image to the cluster
+- See it running in the logs
+- Create a deployment pipeline in Github Actions
 
 ## Get Deployed
 
@@ -51,6 +67,7 @@ aws configure --profile deploymentuser
 ./bin/docker-app-build
 ./bin/docker-app-push dev
 ./bin/tf-app-create dev
+./bin/logs dev
 ```
 
 ### Local Docker Compose
