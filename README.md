@@ -80,9 +80,9 @@ docker compose up --build
 ### Github Action for Deployment
 
 Go into your Repository -> Settings and add the following variables:
-- TF_API_TOKEN - your terrform API token (create a new one using `terraform login` if you need to)
-- AWS_ACCESS_KEY_ID - your deploymentuser access key ID from the earlier step
-- AWS_SECRET_ACCESS_KEY - your deploymentuser secret key from the earlier step
+- `TF_API_TOKEN` - your terrform API token (create a new one using `terraform login` if you need to)
+- `AWS_ACCESS_KEY_ID` - your deploymentuser access key ID from the earlier step
+- `AWS_SECRET_ACCESS_KEY` - your deploymentuser secret key from the earlier step
 
 You'll also need to edit `.github/workflows/build.yml` and change `TF_VAR_dx_root_domain: deploymentexamples.com` to your domain name.
 
