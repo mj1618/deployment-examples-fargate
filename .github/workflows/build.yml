@@ -19,6 +19,7 @@ jobs:
         with:
           node-version: 12.x
       - run: ./bin/docker-app-build
+      - run: ./bin/docker-app-push
 
       # now deploy
       - name: Setup Terraform
