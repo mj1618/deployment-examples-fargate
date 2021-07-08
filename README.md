@@ -20,10 +20,10 @@ The basic sequence of steps is as follows:
 
 ### 1. Prerequisites
 
-1. Get an AWS account and look up your root credentials. `Login -> Your Name -> My Security Credentials -> Access Keys -> Create New Access Key.`
-2. Register a domain name for your application in AWS and set the TF_VAR_dx_root_domain environment variable to the domain name. `Route53 -> Registered Domains -> Register Domain -> Follow the prompts`
-3. Create a Terraform account.
-4. `brew install jq` - used in the script: `./bin/docker-login`
+- Get an AWS account and look up your root credentials. `Login -> Your Name -> My Security Credentials -> Access Keys -> Create New Access Key.`
+- Register a domain name for your application in AWS and set the TF_VAR_dx_root_domain environment variable to the domain name. `Route53 -> Registered Domains -> Register Domain -> Follow the prompts`
+- Create a Terraform account.
+- `brew install jq` - used in the script: `./bin/docker-login`
 
 ### 2. Setup Terraform Cloud
 
