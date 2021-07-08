@@ -1,12 +1,6 @@
 #!/bin/bash
 
-if [ "dev" != "$1" ] && [ "prod" != "$1" ]; then 
-  echo "Please specify dev or prod as first argument"
-  exit 1
-fi
-export TF_WORKSPACE=$1
-
-cd infra/cluster
+cd infra/ecr
 export URL=`terraform output -json | jq '.app_ecr_url.value' -r`
 echo $URL
 AWS_PROFILE=deploymentuser aws ecr get-login-password --region ap-southeast-2 | docker login --username AWS --password-stdin $URL

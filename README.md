@@ -63,9 +63,9 @@ aws configure --profile deploymentuser
 ./bin/tf-pg-create dev
 ./bin/tf-ecr-create
 ./bin/tf-cluster-create dev
-./bin/docker-login dev
+./bin/docker-login
 ./bin/docker-app-build
-./bin/docker-app-push dev
+./bin/docker-app-push
 ./bin/tf-app-create dev
 ./bin/logs dev
 ```
