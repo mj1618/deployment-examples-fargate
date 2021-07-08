@@ -1,6 +1,6 @@
 # Deployment Examples Fargate (dxfar) Pipeline
 
-All deployment-examples are from a blank AWS and Terraform account as no assumptions are made about pre-existing knowledge or infrastructure.
+The example is designed to be run from a blank AWS and Terraform account as no assumptions are made about pre-existing knowledge or infrastructure.
 
 In this example we create a Fargate cluster, an Aurora Postgres database and launch a node server into the cluster.
 
