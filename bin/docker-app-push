@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd infra/ecr
+export URL=`terraform output -json | jq '.app_ecr_url.value' -r`
+
+docker tag dxfar-node-server:latest $URL:latest
+AWS_PROFILE=deploymentuser docker push $URL:latest

@@ -1,0 +1,38 @@
+# run using:
+# docker-compose rm ; docker-compose up --build
+version: '3'
+networks:                                
+  default:                               
+    driver: bridge                       
+    driver_opts:                         
+      com.docker.network.driver.mtu: 65535
+services:
+  dxfar-db:
+    container_name: dxfar-db
+    image: dxfar-db
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    build:
+      context: node-server/
+      dockerfile: db.dockerfile
+
+  dxfar-app:
+    container_name: dxfar-node-server
+    image: dxfar-node-server
+    environment:
+      DB_HOST: dxfar-db
+      DB_READ_HOST: dxfar-db
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      INTERNAL_DOMAIN_NAME: dxfar-node-server
+      NODE_ENV: development
+      SESSION_SECRET: superrandom
+    build:
+      context: node-server/
+      dockerfile: app.dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - dxfar-db

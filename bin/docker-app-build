@@ -1,0 +1,3 @@
+#!/bin/bash
+
+docker build -f ./node-server/app.dockerfile ./node-server -t dxfar-node-server:latest

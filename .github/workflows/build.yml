@@ -1,0 +1,38 @@
+name: Build
+
+env:
+  TF_IN_AUTOMATION: 1
+  TF_VERSION: 1.0.0
+  TF_VAR_dx_root_domain: deploymentexamples.com
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - run: ./bin/docker-app-build
+
+      # now deploy
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          # terraform_version: 0.13.0
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          # aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }} # if you have/need it
+          aws-region: ap-southeast-2
+
+      - run: ./bin/tf-app-create dev

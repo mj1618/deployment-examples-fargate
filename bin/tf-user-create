@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd infra/user
+terraform init
+terraform apply -auto-approve -refresh=true
+terraform output -json

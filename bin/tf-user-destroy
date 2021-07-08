@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd infra/user
+terraform init
+terraform destroy -auto-approve -refresh=true
