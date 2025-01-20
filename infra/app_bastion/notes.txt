@@ -1,0 +1,62 @@
+AWS_PROFILE=deploymentuser aws ecs execute-command --cluster regchain-cluster-dev \
+    --task 74478ecd890d48b4a5c4faa0eae8cc45 \
+    --container bastion \
+    --interactive \
+    --command "/bin/sh"
+
+AWS_PROFILE=deploymentuser aws ssm start-session --target "ecs:regchain-cluster-dev_eea277485c6649d39c138717aaf4ac4a_eea277485c6649d39c138717aaf4ac4a-2485433066" \
+    --document-name AWS-StartPortForwardingSessionToRemoteHost \
+    --parameters '{"host":["regchainpgdev.cluster-cfagllnmajso.ap-southeast-2.rds.amazonaws.com"], "portNumber":["5432"],"localPortNumber":["5432"]}'
+
+AWS_PROFILE=deploymentuser aws ecs describe-tasks --cluster  regchain-cluster-dev --tasks eea277485c6649d39c138717aaf4ac4a
+
+AWS_PROFILE=deploymentuser aws logs tail "/fargate/service/regchain-bastion-dev"
+
+AWS_PROFILE=deploymentuser aws secretsmanager get-secret-value \
+    --secret-id "rds\!cluster-1caac8c5-5e31-4e52-8be1-4f54c476815b"
+
+AWS_PROFILE=deploymentuser aws ecs list-tasks \
+    --cluster  regchain-cluster-dev
+
+
+aws ecs describe-tasks \
+    --cluster  regchain-cluster-dev \
+    --tasks dbe145a4da364ddaa3ea4164931e4dc3 | grep runtimeId
+
+
+
+
+
+
+aws ecs describe-tasks \
+    --cluster  stryd-latest \
+    --tasks $TASK_ID | cat | jq -r ".tasks[0].containers[0].runtimeId"
+
+aws secretsmanager get-secret-value \
+    --secret-id "rds\!cluster-1caac8c5-5e31-4e52-8be1-4f54c476815b"
+
+
+
+AWS_PROFILE=stryd-non-prod aws ecs execute-command --cluster stryd-latest \
+    --task dbe145a4da364ddaa3ea4164931e4dc3 \
+    --container bastion \
+    --interactive \
+    --command "/bin/sh"
+
+TASK_ID=`aws ecs list-tasks \
+    --cluster stryd-latest \
+    --service-name bastion \
+        | cat \
+        | jq ".taskArns[0]" -r \
+        | cut -d "/" -f 3`
+        
+CONTAINER_ID=`aws ecs describe-tasks \
+    --cluster  stryd-latest \
+    --tasks $TASK_ID \
+        | cat \
+        | jq -r ".tasks[0].containers[0].runtimeId"`
+
+AWS_PROFILE=stryd-non-prod aws ssm start-session --target "ecs:stryd-latest_"$TASK_ID"_"$CONTAINER_ID \
+    --document-name AWS-StartPortForwardingSessionToRemoteHost \
+    --parameters '{"host":["stryd-lateststryddb.cluster-cnfpaiqhvqct.ap-southeast-2.rds.amazonaws.com"], "portNumber":["5432"],"localPortNumber":["5432"]}'
+
