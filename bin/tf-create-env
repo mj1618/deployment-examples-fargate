@@ -6,6 +6,6 @@ if [ "dev" != "$1" ] && [ "prod" != "$1" ]; then
 fi
 export TF_WORKSPACE=$1
 
-cd infra/app
+cd infra/$2
 terraform init
-terraform destroy -auto-approve -refresh=true
+terraform apply -auto-approve -refresh=true

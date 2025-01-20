@@ -1,8 +1,9 @@
 terraform {
-  backend remote {
+  backend "remote" {
     organization = "dxfar-org"
     workspaces {
       prefix = "dxfar-vpc-"
+
     }
   }
   required_providers {
@@ -14,14 +15,14 @@ terraform {
   required_version = "~> 1.0"
 }
 
-provider aws {
-  region = "ap-southeast-2"
+provider "aws" {
+  region  = "ap-southeast-2"
   profile = "deploymentuser"
 }
 
-module vpc {
+module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
-  name = local.vpc_name
+  name   = local.vpc_name
 
   cidr = "10.0.0.0/16"
 
@@ -32,10 +33,10 @@ module vpc {
   enable_ipv6 = false
 
   enable_nat_gateway = true
-  single_nat_gateway = true
+  single_nat_gateway = terraform.workspace == "prod" ? false : true
 
   enable_dns_hostnames = true
-  enable_dns_support = true
+  enable_dns_support   = true
 
   tags = {
     Env = terraform.workspace

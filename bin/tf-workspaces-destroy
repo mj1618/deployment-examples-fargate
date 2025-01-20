@@ -1,4 +1,4 @@
 #!/bin/bash
 
-cd infra/workspaces
+cd infra/1-workspaces
 TERRAFORM_CONFIG=~/.terraform.d/credentials.tfrc.json terraform destroy -auto-approve -refresh=true

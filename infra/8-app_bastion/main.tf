@@ -1,5 +1,5 @@
 terraform {
-  backend remote {
+  backend "remote" {
     organization = "regchain-org"
     workspaces {
       prefix = "regchain-bastion-"
@@ -14,12 +14,12 @@ terraform {
   required_version = "~> 1.0"
 }
 
-provider aws {
-  region = "ap-southeast-2"
+provider "aws" {
+  region  = "ap-southeast-2"
   profile = "deploymentuser"
 }
 
-data terraform_remote_state vpc {
+data "terraform_remote_state" "vpc" {
   backend = "remote"
   config = {
     organization = "regchain-org"
@@ -29,7 +29,7 @@ data terraform_remote_state vpc {
   }
 }
 
-data terraform_remote_state cluster {
+data "terraform_remote_state" "cluster" {
   backend = "remote"
   config = {
     organization = "regchain-org"
@@ -39,6 +39,6 @@ data terraform_remote_state cluster {
   }
 }
 
-data aws_ecs_cluster main {
+data "aws_ecs_cluster" "main" {
   cluster_name = data.terraform_remote_state.cluster.outputs.cluster_name
 }

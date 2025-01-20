@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cd infra/user
+cd infra/$1
 terraform init
 terraform destroy -auto-approve -refresh=true
